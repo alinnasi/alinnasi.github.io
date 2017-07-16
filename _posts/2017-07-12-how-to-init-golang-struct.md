@@ -1,5 +1,5 @@
 ---
-title: Golang学习笔记：如何初始化结构体
+title: Golang学习笔记：初始化结构体
 category: Golang
 ---
 
