@@ -131,5 +131,33 @@ func main() {
     m := f.(map[string]interface{})
     fmt.Println(m)
 }
+```
+
+### 自定义格式化
+
+有的时候我们需要自定义JSON编码和解码的方式，只需要结构体实现`MarshalJSON`和`UnmarshalJSON`就行了：
 
 ```
+type T struct {
+    I int
+}
+
+func (t T) MarshalJSON() ([]byte, error) {
+    return []byte(strconv.Itoa(t.I)), nil
+}
+
+func (t *T) UnmarshalJSON(bytes []byte) error {
+    i, err := strconv.Atoi(string(bytes))
+    t.I = i
+    return err
+}
+
+func main() {
+    t := T{123}
+    res, _ := json.Marshal(t)
+    fmt.Println(string(res))
+    json.Unmarshal([]byte("999"), &t)
+    fmt.Println(t)
+}
+```
+
